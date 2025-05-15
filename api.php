@@ -59,16 +59,16 @@ try {
     if ($routeParts[0] == 'albums') {
         if (isset($routeParts[1])) {
             $idAlbum = intval($routeParts[1]);
+            $album = $albumModel->get($idAlbum);
+
+            if (!$album) {
+                sendResponse('404', ["error" => "Album not found."]);
+            }
 
             // Traitement des routes qui commencent par "albums/{idAlbum}/
             switch ($method) {
                 case "GET":
-                    $album = $albumModel->get($idAlbum);
-                    if ($album) {
-                        sendResponse(200, $album);
-                    } else {
-                        sendResponse(404);
-                    }
+                    sendResponse(200, $album);
                     break;
                 case "POST":
                     break;
@@ -87,6 +87,7 @@ try {
                     }                
                     break;
                 case "DELETE":
+
                     break;
                 default:
                     sendResponse(404);
