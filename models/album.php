@@ -39,6 +39,20 @@ class AlbumModel {
         $query->execute([$albumID]);
         return $query->fetchAll();
     }
+
+    public function create($name, $featured_photo_id) {
+
+        $query = $this->db->prepare("
+            INSERT INTO album(name, featured_photo_id) VALUES(?, ?)
+        ");
+
+        $this->db->beginTransaction();
+        $query->execute([$name, $featured_photo_id]);
+        $id = $this->db->lastInsertId();
+        $this->db->commit();
+
+        return $id;
+    }
 }
 
 ?>

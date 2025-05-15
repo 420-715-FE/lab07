@@ -9,8 +9,10 @@ const BASE_URL = "/lab07/api/";
 
 require_once("db.php");
 require_once("models/album.php");
+require_once("models/photo.php");
 
 $albumModel = new AlbumModel($db);
+$photoModel = new PhotoModel($db);
 
 /*
   On crée une fonction pour nous aider à retourner une réponse
@@ -68,7 +70,10 @@ if ($routeParts[0] == 'albums') {
                 }
                 break;
             case "POST":
-
+                break;
+            case "PUT":
+                break;
+            case "DELETE":
                 break;
             default:
                 sendResponse(404);
@@ -82,7 +87,23 @@ if ($routeParts[0] == 'albums') {
                 sendResponse(200, $albums);
                 break;
             case "POST":
-
+                if (
+                    !isset($body['name'])
+                    || empty($body['name'])
+                    || !isset($body['featured_photo_id'])
+                    || intval($body['featured_photo_id']) != $body['featured_photo_id']
+                    || !$photoModel->get($body['featured_photo_id'])
+                ) {
+                    sendResponse(400);
+                } else {
+                    $albumID = $albumModel->create(
+                        $body['name'],
+                        $body['featured_photo_id']
+                    );
+                    if ($albumID) {
+                        sendResponse(200, ["id" => $albumID]);
+                    }
+                }
                 break;
             default:
                 sendResponse(404);

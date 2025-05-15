@@ -68,7 +68,9 @@ Lorsqu'on appelle la route `POST api/albums` ou `PUT api/albums/{id}`, on lui tr
 }
 ```
 
-La route `DELETE api/albums/{id}`, pour sa part, ne nécessite pas l'envoi d'un objet JSON.
+Suite à un ajout ou une modification réussi, on retourne un objet JSON contenant l'ID de l'album ajouté ou modifié (ex: `{ id: 2 }`).
+
+La route `DELETE api/albums/{id}`, pour sa part, ne nécessite pas l'envoi d'un objet JSON, et ne retourne aucune donnée.
 
 > Pour toutes les routes `POST`, `PUT` et `DELETE`, nous ne retournerons aucun objet JSON si l'opération est valide et produit le code d'état `200 OK`. Dans le cas contraire, nous retournerons un objet JSON contenant la clé `error` dont la valeur sera un message d'erreur (ex: `{ "error": "Album not found." })`).
 
