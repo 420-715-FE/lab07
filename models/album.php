@@ -61,6 +61,11 @@ class AlbumModel {
         ");
         $query->execute([$name, $featured_photo_id, $id]);
     }
+
+    public function delete($id) {
+        $query = $this->db->prepare("DELETE FROM album WHERE id = ?");
+        $query->execute([$id]);
+    }
 }
 
 ?>

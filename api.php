@@ -87,7 +87,7 @@ try {
                     }                
                     break;
                 case "DELETE":
-
+                    $albumModel->delete($idAlbum);
                     break;
                 default:
                     sendResponse(404);
