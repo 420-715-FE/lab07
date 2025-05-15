@@ -1,22 +1,16 @@
 <?php
 
 /*
-  Exemple de code PHP pour implanter les routes d'API suivantes:
-  GET /contacts
-  GET /contacts/{id}
-  POST /contacts
-  PUT /contacts/{id}
-  DELETE /contacts/{id}
-
-  Modifier cette constante selon votre cas (doit correspondre à l'emplacement de ce fichier à partir de htdocs)
+  Modifier cette constante selon votre cas (doit correspondre à l'emplacement
+  de ce fichier à partir de htdocs, avec `/api/` à la fin)
   *** Ne PAS omettre les barres obliques au début et à la fin ***
 */
-const BASE_URL = "/exemples-api/exemple-api-02/";
+const BASE_URL = "/lab07/api/";
 
-include_once "db.php";
-include_once "contactsModel.php";
+require_once("db.php");
+require_once("models/album.php");
 
-$model = new ContactModel($db);
+$albumModel = new AlbumModel($db);
 
 /*
   On crée une fonction pour nous aider à retourner une réponse
@@ -50,23 +44,14 @@ $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH); // Récupère l'URL inc
 $route = str_replace(BASE_URL, "", $url); // Récupère la route en retirant BASE_URL de l'URL
 $routeParts = explode("/", $route); // Retourne un tableau contenant les parties de la route (ex: contacts/42 -> ['contacts', '42'])
 
-// Récupère le paramètre facultatif "id" s'il est présent
-$contactId = null;
-if (isset($routeParts[1])) {
-    $contactId = intval($routeParts[1]);
-}
-
-// S'assure qu'il n'y a pas autre chose après le paramètre "id"
-if (count($routeParts) > 2) {
-    sendResponse(404);
-}
-
 // Récupère la méthode HTTP utilisée (GET, POST, etc)
 $method = $_SERVER["REQUEST_METHOD"];
 
 // Récupère le corps de la requête (s'il y a lieu)
 $jsonBody = file_get_contents("php://input");
-$body = json_decode($jsonBody, true);
+$body = json_decode($jsonBody, true); // Convertit le JSON en tableau PHP (associatif ou non)
+
+if 
 
 switch ($method) {
     case "GET":
