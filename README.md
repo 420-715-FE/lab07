@@ -2,7 +2,7 @@
 
 Dans le cadre de ce laboratoire, vous devez reprendre le code du Laboratoire 06-C et y intégrer une API REST permettant de gérer les albums de la galerie de photos. Vous utiliserez cette API dans le laboratoire 08.
 
-Le dépôt contient présentement une copie de la solution du laboratoire 06-C. Vous pouvez remplacer des fichiers par ceux de votre propre laboratoire si vous préférez.
+Le dépôt contient présentement une copie de la solution du laboratoire 06-C. Vous pouvez remplacer les fichiers par ceux de votre propre version si vous préférez cela.
 
 ## Routes
 
