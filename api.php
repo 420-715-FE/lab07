@@ -56,7 +56,23 @@ $body = json_decode($jsonBody, true); // Convertit le JSON en tableau PHP (assoc
 if ($routeParts[0] == 'albums') {
     if (isset($routeParts[1])) {
         $idAlbum = intval($routeParts[1]);
+
         // Traitement des routes qui commencent par "albums/{idAlbum}/
+        switch ($method) {
+            case "GET":
+                $album = $albumModel->get($idAlbum);
+                if ($album) {
+                    sendResponse(200, $album);
+                } else {
+                    sendResponse(404);
+                }
+                break;
+            case "POST":
+
+                break;
+            default:
+                sendResponse(404);
+        }
 
     } else {
         // Traitement de la route "albums"
@@ -66,6 +82,7 @@ if ($routeParts[0] == 'albums') {
                 sendResponse(200, $albums);
                 break;
             case "POST":
+
                 break;
             default:
                 sendResponse(404);

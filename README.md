@@ -37,12 +37,13 @@ La route `GET api/albums` doit retourner un tableau JSON contenant un objet pour
         "id": 1,
         "name": "Zoo de Granby",
         "featured_photo_id": 2,
-        "featured_photo_filepath": 
+        "featured_photo_filepath": "images/27a53ca3-1777-4376-a5f0-bd406b1d0bf6.jpg"
     },
     {
         "id": 2,
         "name": "Plages",
-        "featured_photo_id": 3
+        "featured_photo_id": 3,
+        "featured_photo_filepath": "images/38fec351-8f80-41e8-bc53-22cd0d02bdf5.jpg"
     }
 ]
 ```
@@ -53,11 +54,12 @@ La route `GET api/albums/{id}`, pour sa part, retourne un seul album:
 {
     "id": 2,
     "name": "Plages",
-    "featured_photo_id": 3
+    "featured_photo_id": 3,
+    "featured_photo_filepath": "images/38fec351-8f80-41e8-bc53-22cd0d02bdf5.jpg"
 }
 ```
 
-Lorsqu'on appelle la route `POST api/albums` ou `PUT api/albums/{id}`, on lui transmet un objet JSON contenant les nouvelles données de l'album à ajouter ou modifier. On n'inclut cependant pas le champ `id`.
+Lorsqu'on appelle la route `POST api/albums` ou `PUT api/albums/{id}`, on lui transmet un objet JSON contenant les nouvelles données de l'album à ajouter ou modifier. On n'inclut cependant pas les champs `id` et `featured_photo_filepath`.
 
 ```json
 {
