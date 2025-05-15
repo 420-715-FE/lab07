@@ -2,17 +2,17 @@
 
 Dans le cadre de ce laboratoire, vous devez reprendre le code du Laboratoire 06-C et y intégrer une API REST permettant de gérer les albums de la galerie de photos. Vous utiliserez cette API dans le laboratoire 08.
 
-Le dépôt contient présentement une copie de la solution du laboratoire 06-C. Vous pouvez remplacer les fichiers par ceux de votre propre version si vous préférez cela.
+Le dépôt contient présentement la solution du laboratoire 06-C. Vous pouvez remplacer les fichiers par ceux de votre propre version si vous préférez cela.
 
 ## Routes
 
 L'API devra offrir les routes suivantes:
 
 * `GET api/albums`
-* `GET api/albums/{id}`
+* `GET api/albums/{idAlbum}`
 * `POST api/albums`
-* `PUT api/albums/{id}`
-* `DELETE api/albums/{id}`
+* `PUT api/albums/{idAlbum}`
+* `DELETE api/albums/{idAlbum}`
 * `GET api/albums/{idAlbum}/photos`
 * `POST api/albums/{idAlbum}/photos`
 * `DELETE api/albums/{idAlbum}/photos/{idPhoto}`
@@ -34,7 +34,8 @@ La route `GET api/albums` doit retourner un tableau JSON contenant un objet pour
     {
         "id": 1,
         "name": "Zoo de Granby",
-        "featured_photo_id": 2
+        "featured_photo_id": 2,
+        "featured_photo_filepath": 
     },
     {
         "id": 2,

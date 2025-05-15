@@ -9,7 +9,7 @@ class AlbumModel {
 
     public function getAll() {
         $query = $this->db->query("
-            SELECT album.id, album.name, photo.filepath AS featured_photo_filepath
+            SELECT album.id, album.name, featured_photo_id, photo.filepath AS featured_photo_filepath
                 FROM album
                 LEFT JOIN photo
                     ON photo.id = album.featured_photo_id
@@ -19,7 +19,7 @@ class AlbumModel {
 
     public function get($id) {
         $query = $this->db->prepare("
-            SELECT album.id, album.name, photo.filepath AS featured_photo_filepath
+            SELECT album.id, album.name, featured_photo_id, photo.filepath AS featured_photo_filepath
                 FROM album
                 LEFT JOIN photo
                     ON photo.id = album.featured_photo_id
@@ -31,7 +31,7 @@ class AlbumModel {
 
     public function getPhotos($albumID) {
         $query = $this->db->prepare("
-            SELECT photo.id, description, timestamp, latitude, longitude, filepath
+            SELECT photo.id, description, filepath
                 FROM photo
                 JOIN album_photo
                     ON photo_id = photo.id AND album_id = ?

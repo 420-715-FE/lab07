@@ -51,91 +51,29 @@ $method = $_SERVER["REQUEST_METHOD"];
 $jsonBody = file_get_contents("php://input");
 $body = json_decode($jsonBody, true); // Convertit le JSON en tableau PHP (associatif ou non)
 
-if 
+/* Si la route commence par "albums".
+   Vous devez compléter le code dans cette condition pour implémenter toutes les routes de votre API. */
+if ($routeParts[0] == 'albums') {
+    if (isset($routeParts[1])) {
+        $idAlbum = intval($routeParts[1]);
+        // Traitement des routes qui commencent par "albums/{idAlbum}/
 
-switch ($method) {
-    case "GET":
-        if ($contactId) {
-            $contact = $model->get($contactId);
-            if ($contact) {
-                sendResponse(200, $contact);
-            } else {
-                // Le contact n'existe pas
+    } else {
+        // Traitement de la route "albums"
+        switch ($method) {
+            case "GET":
+                $albums = $albumModel->getAll();
+                sendResponse(200, $albums);
+                break;
+            case "POST":
+                break;
+            default:
                 sendResponse(404);
-            }
-        } else {
-            $contacts = $model->getAll();
-            sendResponse(200, $contacts);
         }
-        break;
-    case "POST":
-        if ($contactId) {
-            sendResponse(404); // On ne veut pas d'ID avec POST (création)
-        }
-
-        if (
-            !isset($body["first_name"]) ||
-            !isset($body["last_name"]) ||
-            !isset($body["phone_numbers"]) ||
-            !is_array($body["phone_numbers"]) ||
-            !isset($body["addresses"]) ||
-            !is_array($body["addresses"]) ||
-            !isset($body["email_addresses"]) ||
-            !is_array($body["email_addresses"])
-        ) {
-            sendResponse(400);
-        }
-
-        $model->insert(
-            $body["first_name"],
-            $body["last_name"],
-            $body["phone_numbers"],
-            $body["addresses"],
-            $body["email_addresses"]
-        );
-        break;
-    case "PUT":
-        if (!$contactId) {
-            // On veut absolument un ID avec un PUT (mise à jour)
-            sendResponse(404);
-        }
-
-        if (
-            !isset($body["first_name"]) ||
-            !isset($body["last_name"]) ||
-            !isset($body["phone_numbers"]) ||
-            !is_array($body["phone_numbers"]) ||
-            !isset($body["addresses"]) ||
-            !is_array($body["addresses"]) ||
-            !isset($body["email_addresses"]) ||
-            !isset($body["email_addresses"])
-        ) {
-            sendResponse(400);
-        }
-
-        $contact = $model->get($contactId);
-        if (!$contact) {
-            sendResponse(404);
-        }
-
-        $model->update(
-            $contactId,
-            $body["first_name"],
-            $body["last_name"],
-            $body["phone_numbers"],
-            $body["addresses"],
-            $body["email_addresses"]
-        );
-        break;
-    case "DELETE":
-        if (!$contactId) {
-            // On veut absolument un ID avec un DELETE
-            sendResponse(404);
-        }
-        $model->delete($contactId);
-        break;
-    default:
-        sendResponse(404);
+    }
+} else {
+    // Si la route ne commence pas par "albums", on retourne une erreur 404.
+    sendResponse(404);
 }
 
 ?>
