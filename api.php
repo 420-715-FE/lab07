@@ -60,8 +60,8 @@ try {
         if (isset($routeParts[1])) {
             // Traitement des routes qui commencent par `albums/{idAlbum}/`
 
-            $idAlbum = intval($routeParts[1]);
-            $album = $albumModel->get($idAlbum);
+            $albumId = intval($routeParts[1]);
+            $album = $albumModel->get($albumId);
 
             if (!$album) {
                 sendResponse('404', ["error" => "Album not found."]);
@@ -73,12 +73,15 @@ try {
                         if ($routeParts[2] != 'photos') {
                             sendResponse(404);
                         }
-                        sendResponse(200, $albumModel->getPhotos($idAlbum));
+                        sendResponse(200, $albumModel->getPhotos($albumId));
                     } else {                    
                         sendResponse(200, $album);
                     }
                     break;
                 case "POST":
+                    if (is_array($body)) {
+                        $albumModel->addPhotos($albumId, $body);
+                    }
                     break;
                 case "PUT":
                     if (
@@ -90,12 +93,12 @@ try {
                     ) {
                         sendResponse(400);
                     } else {
-                        $albumModel->update($idAlbum, $body['name'], $body['featured_photo_id']);
+                        $albumModel->update($albumId, $body['name'], $body['featured_photo_id']);
                         sendResponse(200);
                     }                
                     break;
                 case "DELETE":
-                    $albumModel->delete($idAlbum);
+                    $albumModel->delete($albumId);
                     break;
                 default:
                     sendResponse(404);

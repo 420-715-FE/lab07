@@ -66,6 +66,15 @@ class AlbumModel {
         $query = $this->db->prepare("DELETE FROM album WHERE id = ?");
         $query->execute([$id]);
     }
+
+    public function addPhotos($id, $photoIds) {
+        $this->db->beginTransaction();
+        foreach ($photoIds as $photoId) {
+            $query = $this->db->prepare('INSERT INTO album_photo(album_id, photo_id) VALUES(?, ?)');
+            $query->execute([$id, $photoId]);
+        }
+        $this->db->commit();
+    }
 }
 
 ?>
