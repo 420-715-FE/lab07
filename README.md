@@ -19,7 +19,7 @@ L'API devra offrir les routes suivantes:
 
 Vous implémenterez l'API dans le fichier `api.php`. Celui-ci fera appel à votre modèle des albums pour effectuer les opérations **CRUD** *(**C**reate, **R**ead, **U**pdate, **D**elete)* sur la base de données. Éventuellement, nous voudrions sans doute revoir l'architecture de notre application afin d'intégrer plus fortement l'API à notre MVC, mais pour l'instant l'essentiel de la logique de l'API se trouvera dans `api.php`, et ce fichier ne fera pas appel à des contrôleurs. Un fichier *.htaccess* est déjà présent pour rediriger les requêtes commençant par `/api` vers `/api.php`.
 
-Inspirez-vous des exemples vus en classe, et testez vos routes d'API au fur et à mesure que vous les implémentez, en utilisant une application telle que [Bruno](https://www.usebruno.com/).
+Inspirez-vous des exemples vus en classe, et testez vos routes d'API au fur et à mesure que vous les implémentez, en utilisant une application telle que [Bruno](https://www.usebruno.com/). Vous pouvez aussi observer les résultats des requêtes de création, modification et suppression à même la galerie de photos.
 
 ## JSON
 
