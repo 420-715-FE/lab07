@@ -68,55 +68,17 @@ try {
             }
 
             switch ($method) {
-                case "GET":
-                    if (isset($routeParts[2])) {
-                        if ($routeParts[2] != 'photos') {
-                            sendResponse(404);
-                        }
-                        sendResponse(200, $albumModel->getPhotos($albumId));
-                    } else {                    
-                        sendResponse(200, $album);
-                    }
+                case "GET":        
+                    sendResponse(200, $album);
                     break;
                 case "POST":
-                    if (is_array($body)) {
-                        $albumModel->addPhotos($albumId, $body);
-                    }
+
                     break;
                 case "PUT":
-                    if (
-                        !isset($body['name'])
-                        || empty($body['name'])
-                        || !isset($body['featured_photo_id'])
-                        || intval($body['featured_photo_id']) != $body['featured_photo_id']
-                        || !$photoModel->get($body['featured_photo_id'])
-                    ) {
-                        sendResponse(400);
-                    } else {
-                        $albumModel->update($albumId, $body['name'], $body['featured_photo_id']);
-                        sendResponse(200);
-                    }                
+                
                     break;
                 case "DELETE":
-                    if (isset($routeParts[2])) {
-                        if (
-                            $routeParts[2] == 'photos'
-                            && isset($routeParts[3])
-                            && intval($routeParts[3]) == $routeParts[3]
-                        ) {
-                            $photoId = intval($routeParts[3]);
-                            if (!$photoModel->get($photoId)) {
-                                sendResponse(404);
-                            }
-                            $albumModel->removePhoto($albumId, $photoId);
-                            sendResponse(200);
-                        } else {
-                            sendResponse(403);
-                        }
-                    } else {
-                        $albumModel->delete($albumId);
-                        sendResponse(200);
-                    }
+
                     break;
                 default:
                     sendResponse(404);
@@ -130,23 +92,6 @@ try {
                     sendResponse(200, $albums);
                     break;
                 case "POST":
-                    if (
-                        !isset($body['name'])
-                        || empty($body['name'])
-                        || !isset($body['featured_photo_id'])
-                        || intval($body['featured_photo_id']) != $body['featured_photo_id']
-                        || !$photoModel->get($body['featured_photo_id'])
-                    ) {
-                        sendResponse(400);
-                    } else {
-                        $albumID = $albumModel->create(
-                            $body['name'],
-                            $body['featured_photo_id']
-                        );
-                        if ($albumID) {
-                            sendResponse(200, ["id" => $albumID]);
-                        }
-                    }
                     break;
                 default:
                     sendResponse(404);
