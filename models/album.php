@@ -75,6 +75,11 @@ class AlbumModel {
         }
         $this->db->commit();
     }
+
+    public function removePhoto($id, $photoId) {
+        $query = $this->db->prepare("DELETE FROM album_photo WHERE album_id = ? AND photo_id = ?");
+        $query->execute([$id, $photoId]);
+    }
 }
 
 ?>

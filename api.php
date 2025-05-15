@@ -98,7 +98,25 @@ try {
                     }                
                     break;
                 case "DELETE":
-                    $albumModel->delete($albumId);
+                    if (isset($routeParts[2])) {
+                        if (
+                            $routeParts[2] == 'photos'
+                            && isset($routeParts[3])
+                            && intval($routeParts[3]) == $routeParts[3]
+                        ) {
+                            $photoId = intval($routeParts[3]);
+                            if (!$photoModel->get($photoId)) {
+                                sendResponse(404);
+                            }
+                            $albumModel->removePhoto($albumId, $photoId);
+                            sendResponse(200);
+                        } else {
+                            sendResponse(403);
+                        }
+                    } else {
+                        $albumModel->delete($albumId);
+                        sendResponse(200);
+                    }
                     break;
                 default:
                     sendResponse(404);
