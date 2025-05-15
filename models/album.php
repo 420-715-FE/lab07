@@ -41,7 +41,6 @@ class AlbumModel {
     }
 
     public function create($name, $featured_photo_id) {
-
         $query = $this->db->prepare("
             INSERT INTO album(name, featured_photo_id) VALUES(?, ?)
         ");
@@ -52,6 +51,15 @@ class AlbumModel {
         $this->db->commit();
 
         return $id;
+    }
+
+    public function update($id, $name, $featured_photo_id) {
+        $query = $this->db->prepare("
+            UPDATE album
+                SET name = ?, featured_photo_id = ?
+                WHERE id = ?
+        ");
+        $query->execute([$name, $featured_photo_id, $id]);
     }
 }
 

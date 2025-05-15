@@ -55,63 +55,81 @@ $body = json_decode($jsonBody, true); // Convertit le JSON en tableau PHP (assoc
 
 /* Si la route commence par "albums".
    Vous devez compléter le code dans cette condition pour implémenter toutes les routes de votre API. */
-if ($routeParts[0] == 'albums') {
-    if (isset($routeParts[1])) {
-        $idAlbum = intval($routeParts[1]);
+try {
+    if ($routeParts[0] == 'albums') {
+        if (isset($routeParts[1])) {
+            $idAlbum = intval($routeParts[1]);
 
-        // Traitement des routes qui commencent par "albums/{idAlbum}/
-        switch ($method) {
-            case "GET":
-                $album = $albumModel->get($idAlbum);
-                if ($album) {
-                    sendResponse(200, $album);
-                } else {
-                    sendResponse(404);
-                }
-                break;
-            case "POST":
-                break;
-            case "PUT":
-                break;
-            case "DELETE":
-                break;
-            default:
-                sendResponse(404);
-        }
-
-    } else {
-        // Traitement de la route "albums"
-        switch ($method) {
-            case "GET":
-                $albums = $albumModel->getAll();
-                sendResponse(200, $albums);
-                break;
-            case "POST":
-                if (
-                    !isset($body['name'])
-                    || empty($body['name'])
-                    || !isset($body['featured_photo_id'])
-                    || intval($body['featured_photo_id']) != $body['featured_photo_id']
-                    || !$photoModel->get($body['featured_photo_id'])
-                ) {
-                    sendResponse(400);
-                } else {
-                    $albumID = $albumModel->create(
-                        $body['name'],
-                        $body['featured_photo_id']
-                    );
-                    if ($albumID) {
-                        sendResponse(200, ["id" => $albumID]);
+            // Traitement des routes qui commencent par "albums/{idAlbum}/
+            switch ($method) {
+                case "GET":
+                    $album = $albumModel->get($idAlbum);
+                    if ($album) {
+                        sendResponse(200, $album);
+                    } else {
+                        sendResponse(404);
                     }
-                }
-                break;
-            default:
-                sendResponse(404);
+                    break;
+                case "POST":
+                    break;
+                case "PUT":
+                    if (
+                        !isset($body['name'])
+                        || empty($body['name'])
+                        || !isset($body['featured_photo_id'])
+                        || intval($body['featured_photo_id']) != $body['featured_photo_id']
+                        || !$photoModel->get($body['featured_photo_id'])
+                    ) {
+                        sendResponse(400);
+                    } else {
+                        $albumModel->update($idAlbum, $body['name'], $body['featured_photo_id']);
+                        sendResponse(200);
+                    }                
+                    break;
+                case "DELETE":
+                    break;
+                default:
+                    sendResponse(404);
+            }
+
+        } else {
+            // Traitement de la route "albums"
+            switch ($method) {
+                case "GET":
+                    $albums = $albumModel->getAll();
+                    sendResponse(200, $albums);
+                    break;
+                case "POST":
+                    if (
+                        !isset($body['name'])
+                        || empty($body['name'])
+                        || !isset($body['featured_photo_id'])
+                        || intval($body['featured_photo_id']) != $body['featured_photo_id']
+                        || !$photoModel->get($body['featured_photo_id'])
+                    ) {
+                        sendResponse(400);
+                    } else {
+                        $albumID = $albumModel->create(
+                            $body['name'],
+                            $body['featured_photo_id']
+                        );
+                        if ($albumID) {
+                            sendResponse(200, ["id" => $albumID]);
+                        }
+                    }
+                    break;
+                default:
+                    sendResponse(404);
+            }
         }
+    } else {
+        // Si la route ne commence pas par "albums", on retourne une erreur 404.
+        sendResponse(404);
     }
-} else {
-    // Si la route ne commence pas par "albums", on retourne une erreur 404.
-    sendResponse(404);
+} catch(Exception $e) {
+    // En production, on éviterait de retourner le contenu de l'exception au client.
+    // Nous le faisons ici à des fins de débogage.
+    sendResponse(500, ["error" => $e->__toString()]);
 }
 
 ?>

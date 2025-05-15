@@ -68,7 +68,7 @@ Lorsqu'on appelle la route `POST api/albums` ou `PUT api/albums/{id}`, on lui tr
 }
 ```
 
-Suite à un ajout ou une modification réussi, on retourne un objet JSON contenant l'ID de l'album ajouté ou modifié (ex: `{ id: 2 }`).
+Suite à un ajout réussi, on retourne un objet JSON contenant l'ID du nouvel album (ex: `{ id: 2 }`).
 
 La route `DELETE api/albums/{id}`, pour sa part, ne nécessite pas l'envoi d'un objet JSON, et ne retourne aucune donnée.
 
